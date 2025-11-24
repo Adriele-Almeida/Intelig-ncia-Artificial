@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Maestro do Novo Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0e27;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Gradiente animado de fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0, 217, 255, 0.1) 0%, rgba(10, 14, 39, 0) 70%);
+            animation: pulseGradient 4s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes pulseGradient {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Efeito scanline */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 217, 255, 0.03) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0, 217, 255, 0.03) 3px
+            );
+            pointer-events: none;
+            z-index: 999;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
+        }
+
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #gridCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+        }
+
+        .main-logo {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.6));
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.6));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(0, 217, 255, 0.9));
+            }
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #00d9ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow:
+                0 0 10px rgba(0, 217, 255, 1),
+                0 0 20px rgba(0, 217, 255, 0.8),
+                0 0 30px rgba(0, 217, 255, 0.6);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 10px rgba(0, 217, 255, 1),
+                    0 0 20px rgba(0, 217, 255, 0.8),
+                    0 0 30px rgba(0, 217, 255, 0.6);
+            }
+            50% {
+                text-shadow:
+                    0 0 20px rgba(0, 217, 255, 1),
+                    0 0 30px rgba(0, 217, 255, 0.9),
+                    0 0 40px rgba(0, 217, 255, 0.8),
+                    0 0 50px rgba(0, 217, 255, 0.6);
+            }
+        }
+
+        .subtitle-box {
+            background: rgba(8, 22, 36, 0.85);
+            border: 2px solid rgba(0, 217, 255, 0.4);
+            border-radius: 12px;
+            padding: 25px 35px;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .subtitle-title {
+            color: #00d9ff;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-left: 4px solid #00d9ff;
+            padding-left: 15px;
+        }
+
+        .subtitle-text {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Section IA */
+        .section-ia {
+            background: rgba(8, 22, 36, 0.75);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 217, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: rgba(0, 217, 255, 0.1);
+            border-left: 4px solid #00d9ff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin-bottom: 35px;
+        }
+
+        .highlight-box::before {
+            content: '💡';
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .highlight-text {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* O que você vai aprender */
+        .learning-title {
+            font-size: 1.8rem;
+            color: #c77dff;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: rgba(0, 217, 255, 0.05);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 217, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+        }
+
+        .tool-name {
+            font-size: 1.5rem;
+            color: #00d9ff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .tool-subtitle {
+            color: #c77dff;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* Nível */
+        .level-box {
+            background: rgba(8, 22, 36, 0.75);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+        }
+
+        .level-title {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .duration-box {
+            background: rgba(0, 217, 255, 0.1);
+            border-left: 4px solid #00d9ff;
+            padding: 18px 25px;
+            border-radius: 8px;
+        }
+
+        .duration-box::before {
+            content: '💡';
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .duration-text {
+            color: #e0e0e0;
+            font-size: 1.05rem;
+        }
+
+        /* Tabela de Módulos */
+        .modules-section {
+            background: rgba(8, 22, 36, 0.75);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+        }
+
+        .modules-title {
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        thead {
+            background: rgba(0, 217, 255, 0.15);
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            color: #00d9ff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-bottom: 2px solid rgba(0, 217, 255, 0.4);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            color: #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .nivel-iniciante {
+            color: #7cb342;
+            font-weight: 600;
+        }
+
+        .nivel-intermediario {
+            color: #ffa726;
+            font-weight: 600;
+        }
+
+        .tema-cell {
+            font-weight: 600;
+            color: #00d9ff;
+        }
+
+        /* Investimento */
+        .investment-section {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.15) 0%, rgba(199, 125, 255, 0.15) 100%);
+            border: 3px solid rgba(0, 217, 255, 0.5);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 40px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 217, 255, 0.3);
+            animation: investmentPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes investmentPulse {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(0, 217, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 8px 40px rgba(0, 217, 255, 0.5);
+            }
+        }
+
+        .investment-title {
+            font-size: 2.5rem;
+            color: #00d9ff;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+        }
+
+        .price {
+            font-size: 4rem;
+            color: #ffffff;
+            font-weight: 800;
+            margin: 20px 0;
+            text-shadow:
+                0 0 10px rgba(0, 217, 255, 0.8),
+                0 0 20px rgba(0, 217, 255, 0.6);
+        }
+
+        .payment-options {
+            margin-top: 30px;
+        }
+
+        .payment-text {
+            color: #e0e0e0;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+
+        .payment-highlight {
+            color: #00d9ff;
+            font-weight: 600;
+        }
+
+        /* Botões */
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #00d9ff 0%, #0096c7 100%);
+            color: #0a0e27;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 217, 255, 0.6);
+            background: linear-gradient(135deg, #0096c7 0%, #00d9ff 100%);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #c77dff 0%, #9d4edd 100%);
+            box-shadow: 0 8px 25px rgba(199, 125, 255, 0.4);
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 12px 35px rgba(199, 125, 255, 0.6);
+            background: linear-gradient(135deg, #9d4edd 0%, #c77dff 100%);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .main-logo {
+                max-width: 90%;
+            }
+
+            .main-title {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+
+            .subtitle-box {
+                padding: 20px;
+            }
+
+            .subtitle-title {
+                font-size: 1.1rem;
+            }
+
+            .subtitle-text {
+                font-size: 0.95rem;
+            }
+
+            .section-ia,
+            .level-box,
+            .modules-section,
+            .investment-section {
+                padding: 25px;
+            }
+
+            .section-title,
+            .modules-title {
+                font-size: 1.6rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price {
+                font-size: 2.5rem;
+            }
+
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .main-title {
+                font-size: 1.5rem;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gridCanvas"></canvas>
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="logo-branco.png" alt="O Maestro do Novo Digital" class="main-logo">
+            
+            <div class="subtitle-box">
+                <div class="subtitle-title">Treinamento Intensivo Presencial</div>
+                <p class="subtitle-text">
+                    Didática com aula prática direto ao ponto, onde você me assiste fazendo e depois eu faço junto com você.
+                </p>
+            </div>
+        </div>
+
+        <!-- Inteligência Artificial -->
+        <div class="section-ia">
+            <h2 class="section-title">Inteligência Artificial</h2>
+            
+            <div class="highlight-box">
+                <p class="highlight-text">
+                    Fundamentos, familiarização com as plataformas essenciais e primeiros passos estratégicos no mundo da Inteligência Artificial.
+                </p>
+            </div>
+
+            <h3 class="learning-title">O que você vai aprender:</h3>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-name">ChatGPT</div>
+                    <div class="tool-subtitle">Criando Robôs GPTs</div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-name">Gemini</div>
+                    <div class="tool-subtitle">Prompts Nano Banana</div>
+                </div>
+                
+                <div class="tool-card">
+                    <div class="tool-name">Claude</div>
+                    <div class="tool-subtitle">Artefatos Interativos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nível -->
+        <div class="level-box">
+            <h2 class="level-title">Nível Iniciante / Intermediário</h2>
+            
+            <div class="duration-box">
+                <p class="duration-text">
+                    Treinamento Imersivo com duração média de 6 a 7 horas.
+                </p>
+            </div>
+        </div>
+
+        <!-- Módulos & Conteúdos -->
+        <div class="modules-section">
+            <h2 class="modules-title">Módulos & Conteúdos</h2>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tema</th>
+                            <th>Nível</th>
+                            <th>Conteúdo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tema-cell">IA</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Introdução da Inteligência Artificial e apresentação básica das plataformas: ChatGPT, Gemini e Claude</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Introdução e apresentação da plataforma</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Personalização</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Prompts + Especialidades de prompt</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Imagens DALLE</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Vídeos e Imagens Sora</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Projeto: o que é, para que serve e quando usar</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>Agendamento de Tarefas</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>Conectores</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>Modo Agente: Automação de tarefas</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>"Agentes" ChatGPT</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>Integração de vários "Agentes" ChatGPT</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">ChatGPT</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>GPTs Personalizados</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">Claude</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Introdução e apresentação da plataforma</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">Claude</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Artefatos Interativos</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">Gemini</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Introdução e apresentação da plataforma</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">Gemini</td>
+                            <td><span class="nivel-iniciante">Iniciante</span></td>
+                            <td>Nano Banana / Imagens ultra realistas</td>
+                        </tr>
+                        <tr>
+                            <td class="tema-cell">Gemini</td>
+                            <td><span class="nivel-intermediario">Intermediário</span></td>
+                            <td>Técnicas de Prompts</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Investimento -->
+        <div class="investment-section">
+            <h2 class="investment-title">Investimento</h2>
+            <div class="price">R$ 990,00</div>
+            
+            <div class="payment-options">
+                <p class="payment-text"><span class="payment-highlight">Pagamento via PIX</span></p>
+                <p class="payment-text">OU</p>
+                <p class="payment-text"><span class="payment-highlight">12x no cartão</span> com o juros repassado</p>
+            </div>
+
+            <div class="buttons-container">
+                <a href="#" class="cta-button" onclick="copyPix(event)">Pagar com PIX</a>
+                <a href="#" class="cta-button secondary">12x no Cartão</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== COPIAR CHAVE PIX ==========
+        function copyPix(event) {
+            event.preventDefault();
+            const pixKey = '31994128989';
+            
+            navigator.clipboard.writeText(pixKey).then(() => {
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✓ Chave PIX Copiada!';
+                button.style.background = 'linear-gradient(135deg, #7cb342 0%, #558b2f 100%)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, #00d9ff 0%, #0096c7 100%)';
+                }, 3000);
+            }).catch(() => {
+                alert('Chave PIX: 31994128989');
+            });
+        }
+
+        // ========== GRID FUTURISTA ==========
+        const gridCanvas = document.getElementById('gridCanvas');
+        const gridCtx = gridCanvas.getContext('2d');
+        gridCanvas.width = window.innerWidth;
+        gridCanvas.height = window.innerHeight;
+
+        function drawGrid() {
+            const gridSize = 50;
+            gridCtx.strokeStyle = 'rgba(0, 217, 255, 0.08)';
+            gridCtx.lineWidth = 1;
+
+            for (let x = 0; x < gridCanvas.width; x += gridSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(x, 0);
+                gridCtx.lineTo(x, gridCanvas.height);
+                gridCtx.stroke();
+            }
+
+            for (let y = 0; y < gridCanvas.height; y += gridSize) {
+                gridCtx.beginPath();
+                gridCtx.moveTo(0, y);
+                gridCtx.lineTo(gridCanvas.width, y);
+                gridCtx.stroke();
+            }
+        }
+
+        drawGrid();
+
+        // ========== EFEITO MATRIX ==========
+        const matrixCanvas = document.getElementById('matrixCanvas');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        matrixCanvas.width = window.innerWidth;
+        matrixCanvas.height = window.innerHeight;
+
+        const katakana = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+        const alphabet = katakana + latin + nums + symbols;
+
+        const fontSize = 14;
+        const columns = matrixCanvas.width / fontSize;
+
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+
+        function drawMatrix() {
+            matrixCtx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+
+            matrixCtx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
+                const brightness = Math.random();
+                if (brightness > 0.95) {
+                    matrixCtx.fillStyle = '#00d9ff';
+                } else if (brightness > 0.7) {
+                    matrixCtx.fillStyle = '#00b4d8';
+                } else {
+                    matrixCtx.fillStyle = '#0096c7';
+                }
+
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                matrixCtx.fillText(text, x, y);
+
+                if (y > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        // ========== ANIMAÇÃO PRINCIPAL ==========
+        let matrixFrameCount = 0;
+        function animate() {
+            if (matrixFrameCount % 2 === 0) {
+                drawMatrix();
+            }
+            matrixFrameCount++;
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // ========== RESIZE ==========
+        window.addEventListener('resize', () => {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+            gridCanvas.width = window.innerWidth;
+            gridCanvas.height = window.innerHeight;
+            drawGrid();
+        });
+    </script>
+</body>
+</html>
