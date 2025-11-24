@@ -161,8 +161,7 @@
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 15px;
-            border-left: 4px solid #00d9ff;
-            padding-left: 15px;
+            padding-left: 0;
         }
 
         .subtitle-text {
@@ -191,16 +190,9 @@
 
         .highlight-box {
             background: rgba(0, 217, 255, 0.1);
-            border-left: 4px solid #00d9ff;
             padding: 20px 25px;
             border-radius: 8px;
             margin-bottom: 35px;
-        }
-
-        .highlight-box::before {
-            content: '💡';
-            margin-right: 10px;
-            font-size: 1.3rem;
         }
 
         .highlight-text {
@@ -212,7 +204,7 @@
         /* O que você vai aprender */
         .learning-title {
             font-size: 1.8rem;
-            color: #c77dff;
+            color: #00d9ff;
             margin-bottom: 25px;
             font-weight: 600;
         }
@@ -231,12 +223,24 @@
             padding: 25px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            cursor: pointer;
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
             border-color: rgba(0, 217, 255, 0.6);
             box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+        }
+
+        .tool-card.expanded {
+            border-color: rgba(0, 217, 255, 0.8);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .tool-name {
@@ -247,9 +251,65 @@
         }
 
         .tool-subtitle {
-            color: #c77dff;
+            color: #00d9ff;
             font-size: 1rem;
             font-style: italic;
+            opacity: 0.8;
+        }
+
+        .expand-icon {
+            color: #00d9ff;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .tool-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .tool-card.expanded .tool-content {
+            max-height: 2000px;
+        }
+
+        .module-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 3px solid rgba(0, 217, 255, 0.5);
+        }
+
+        .module-level {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .module-level.iniciante {
+            background: rgba(124, 179, 66, 0.2);
+            color: #7cb342;
+            border: 1px solid #7cb342;
+        }
+
+        .module-level.intermediario {
+            background: rgba(255, 167, 38, 0.2);
+            color: #ffa726;
+            border: 1px solid #ffa726;
+        }
+
+        .module-description {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* Nível */
@@ -271,15 +331,8 @@
 
         .duration-box {
             background: rgba(0, 217, 255, 0.1);
-            border-left: 4px solid #00d9ff;
             padding: 18px 25px;
             border-radius: 8px;
-        }
-
-        .duration-box::before {
-            content: '💡';
-            margin-right: 10px;
-            font-size: 1.2rem;
         }
 
         .duration-text {
@@ -287,79 +340,12 @@
             font-size: 1.05rem;
         }
 
-        /* Tabela de Módulos */
-        .modules-section {
-            background: rgba(8, 22, 36, 0.75);
-            border: 2px solid rgba(0, 217, 255, 0.3);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 40px;
-            backdrop-filter: blur(15px);
-        }
-
-        .modules-title {
-            font-size: 2.2rem;
-            color: #ffffff;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        thead {
-            background: rgba(0, 217, 255, 0.15);
-        }
-
-        th {
-            padding: 18px 15px;
-            text-align: left;
-            color: #00d9ff;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-bottom: 2px solid rgba(0, 217, 255, 0.4);
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
-            color: #e0e0e0;
-            font-size: 0.95rem;
-        }
-
-        tr:hover {
-            background: rgba(0, 217, 255, 0.05);
-        }
-
-        .nivel-iniciante {
-            color: #7cb342;
-            font-weight: 600;
-        }
-
-        .nivel-intermediario {
-            color: #ffa726;
-            font-weight: 600;
-        }
-
-        .tema-cell {
-            font-weight: 600;
-            color: #00d9ff;
-        }
-
         /* Investimento */
         .investment-section {
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.15) 0%, rgba(199, 125, 255, 0.15) 100%);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.15) 0%, rgba(0, 150, 199, 0.15) 100%);
             border: 3px solid rgba(0, 217, 255, 0.5);
             border-radius: 20px;
-            padding: 50px;
+            padding: 40px;
             text-align: center;
             margin-bottom: 40px;
             backdrop-filter: blur(15px);
@@ -377,7 +363,7 @@
         }
 
         .investment-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #00d9ff;
             margin-bottom: 15px;
             font-weight: 700;
@@ -385,29 +371,27 @@
         }
 
         .price {
-            font-size: 4rem;
+            font-size: 3rem;
             color: #ffffff;
             font-weight: 800;
-            margin: 20px 0;
+            margin: 15px 0 30px 0;
             text-shadow:
                 0 0 10px rgba(0, 217, 255, 0.8),
                 0 0 20px rgba(0, 217, 255, 0.6);
         }
 
-        .payment-options {
-            margin-top: 30px;
+        .cartao-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
 
-        .payment-text {
-            color: #e0e0e0;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin: 10px 0;
-        }
-
-        .payment-highlight {
+        .cartao-info {
             color: #00d9ff;
-            font-weight: 600;
+            font-size: 0.85rem;
+            margin: 0;
+            opacity: 0.9;
         }
 
         /* Botões */
@@ -443,13 +427,13 @@
         }
 
         .cta-button.secondary {
-            background: linear-gradient(135deg, #c77dff 0%, #9d4edd 100%);
-            box-shadow: 0 8px 25px rgba(199, 125, 255, 0.4);
+            background: linear-gradient(135deg, #0096c7 0%, #0077b6 100%);
+            box-shadow: 0 8px 25px rgba(0, 150, 199, 0.4);
         }
 
         .cta-button.secondary:hover {
-            box-shadow: 0 12px 35px rgba(199, 125, 255, 0.6);
-            background: linear-gradient(135deg, #9d4edd 0%, #c77dff 100%);
+            box-shadow: 0 12px 35px rgba(0, 150, 199, 0.6);
+            background: linear-gradient(135deg, #0077b6 0%, #0096c7 100%);
         }
 
         /* Responsivo */
@@ -491,16 +475,40 @@
                 grid-template-columns: 1fr;
             }
 
+            .investment-section {
+                padding: 25px;
+            }
+
+            .investment-title {
+                font-size: 1.5rem;
+            }
+
             .price {
                 font-size: 2.5rem;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cartao-container {
+                width: 100%;
             }
 
             .cta-button {
                 padding: 15px 35px;
                 font-size: 1.1rem;
+                width: 100%;
             }
 
-            table {
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
                 font-size: 0.85rem;
             }
 
@@ -558,19 +566,108 @@
             <h3 class="learning-title">O que você vai aprender:</h3>
             
             <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-name">ChatGPT</div>
-                    <div class="tool-subtitle">Criando Robôs GPTs</div>
+                <div class="tool-card" onclick="toggleCard(this)">
+                    <div class="tool-header">
+                        <div>
+                            <div class="tool-name">ChatGPT</div>
+                            <div class="tool-subtitle">Criando Robôs GPTs</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Introdução e apresentação da plataforma</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Personalização</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Prompts + Especialidades de prompt</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Imagens DALLE</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Vídeos e Imagens Sora</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Projeto: o que é, para que serve e quando usar</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">Agendamento de Tarefas</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">Conectores</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">Modo Agente: Automação de tarefas</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">"Agentes" ChatGPT</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">Integração de vários "Agentes" ChatGPT</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">GPTs Personalizados</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="tool-card">
-                    <div class="tool-name">Gemini</div>
-                    <div class="tool-subtitle">Prompts Nano Banana</div>
+                <div class="tool-card" onclick="toggleCard(this)">
+                    <div class="tool-header">
+                        <div>
+                            <div class="tool-name">Gemini</div>
+                            <div class="tool-subtitle">Prompts Nano Banana</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Introdução e apresentação da plataforma</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Nano Banana / Imagens ultra realistas</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level intermediario">Intermediário</span>
+                            <p class="module-description">Técnicas de Prompts</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="tool-card">
-                    <div class="tool-name">Claude</div>
-                    <div class="tool-subtitle">Artefatos Interativos</div>
+                <div class="tool-card" onclick="toggleCard(this)">
+                    <div class="tool-header">
+                        <div>
+                            <div class="tool-name">Claude</div>
+                            <div class="tool-subtitle">Artefatos Interativos</div>
+                        </div>
+                        <div class="expand-icon">▼</div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Introdução e apresentação da plataforma</p>
+                        </div>
+                        <div class="module-item">
+                            <span class="module-level iniciante">Iniciante</span>
+                            <p class="module-description">Artefatos Interativos</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -586,134 +683,27 @@
             </div>
         </div>
 
-        <!-- Módulos & Conteúdos -->
-        <div class="modules-section">
-            <h2 class="modules-title">Módulos & Conteúdos</h2>
-            
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Tema</th>
-                            <th>Nível</th>
-                            <th>Conteúdo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="tema-cell">IA</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Introdução da Inteligência Artificial e apresentação básica das plataformas: ChatGPT, Gemini e Claude</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Introdução e apresentação da plataforma</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Personalização</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Prompts + Especialidades de prompt</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Imagens DALLE</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Vídeos e Imagens Sora</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Projeto: o que é, para que serve e quando usar</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>Agendamento de Tarefas</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>Conectores</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>Modo Agente: Automação de tarefas</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>"Agentes" ChatGPT</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>Integração de vários "Agentes" ChatGPT</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">ChatGPT</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>GPTs Personalizados</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">Claude</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Introdução e apresentação da plataforma</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">Claude</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Artefatos Interativos</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">Gemini</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Introdução e apresentação da plataforma</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">Gemini</td>
-                            <td><span class="nivel-iniciante">Iniciante</span></td>
-                            <td>Nano Banana / Imagens ultra realistas</td>
-                        </tr>
-                        <tr>
-                            <td class="tema-cell">Gemini</td>
-                            <td><span class="nivel-intermediario">Intermediário</span></td>
-                            <td>Técnicas de Prompts</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
         <!-- Investimento -->
         <div class="investment-section">
             <h2 class="investment-title">Investimento</h2>
             <div class="price">R$ 990,00</div>
-            
-            <div class="payment-options">
-                <p class="payment-text"><span class="payment-highlight">Pagamento via PIX</span></p>
-                <p class="payment-text">OU</p>
-                <p class="payment-text"><span class="payment-highlight">12x no cartão</span> com o juros repassado</p>
-            </div>
 
             <div class="buttons-container">
                 <a href="#" class="cta-button" onclick="copyPix(event)">Pagar com PIX</a>
-                <a href="#" class="cta-button secondary">12x no Cartão</a>
+                <div class="cartao-container">
+                    <a href="#" class="cta-button secondary">12x no Cartão</a>
+                    <p class="cartao-info">12x no cartão com o juros repassado</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // ========== TOGGLE CARDS ==========
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+
         // ========== COPIAR CHAVE PIX ==========
         function copyPix(event) {
             event.preventDefault();
